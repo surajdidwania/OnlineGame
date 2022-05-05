@@ -3,8 +3,10 @@ import time as t
 from _thread import *
 from .game import Game
 from .chat import Chat
+from .player import Player
 
 class Round(object):
+
     def __init__(self, word, player_drawing, players):
         """
         init object
@@ -16,7 +18,7 @@ class Round(object):
         self.player_drawing = player_drawing
         self.player_guesses = []
         self.skips = 0
-        self.player_score = defaultdict(int) # might be wrong
+        self.player_score = defaultdict(int)  # might be wrong
         self.time = 75
         self.start = time.time()
         self.chat = Chat(self)
