@@ -6,7 +6,7 @@ class Chat(object):
         self.content = []
         self.round = r
 
-    def update_chat(self,msg):
+    def update_chat(self, msg):
         self.content.append(msg)
 
     def get_chat(self):

@@ -34,6 +34,20 @@ class Round(object):
             self.time -= 1
         self.end_round("Time is Up!!")
 
+    def get_scores(self):
+
+
+    def skip(self):
+        """
+        returns true if round skipped threshold met
+        :return:
+        """
+        self.skips += 1
+        if self.skips > len(self.players)-2:
+            return True
+
+        return False
+
     def guess(self, player, wrd):
         """
         :returns bool if player guess correct word
