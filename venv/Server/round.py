@@ -7,7 +7,7 @@ from .player import Player
 
 class Round(object):
 
-    def __init__(self, word, player_drawing, players):
+    def __init__(self, word, player_drawing, players, game):
         """
         init object
         :param word: str
@@ -35,7 +35,21 @@ class Round(object):
         self.end_round("Time is Up!!")
 
     def get_scores(self):
+        """
+        :return: all the player scores
+        """
+        return self.scores
 
+    def get_score(self, player):
+        """
+        get a specific player scores
+        :param player: Player list
+        :return:
+        """
+        if player in self.player_score:
+            return self.player_score[player]
+        else:
+            raise Exception("Player not in score list")
 
     def skip(self):
         """

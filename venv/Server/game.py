@@ -24,7 +24,7 @@ class Game(object):
         starts a nre round
         :return: None
         """
-        self.round = Round(self.get_word(), self.players[self.player_draw_ind])
+        self.round = Round(self.get_word(), self.players[self.player_draw_ind], self.players, self)
         self.player_draw_ind += 1
 
         if self.player_draw_ind >= len(self.players):
@@ -39,7 +39,7 @@ class Game(object):
         :param guess: str
         :return:
         """
-        pass
+        return self.round.guess(player, guess)
 
     def player_disconnected(self, player):
         """
