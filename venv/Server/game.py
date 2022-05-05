@@ -1,6 +1,7 @@
 from .player import Player
 from .round import Round
 from .board import Board
+import random
 
 class Game(object):
 
@@ -12,7 +13,7 @@ class Game(object):
         """
         self.id = id
         self.players = players
-        self.words_used = []
+        self.words_used = set()
         self.round = None
         self.board = Board()
         self.player_draw_ind = 0  # where I am at player list after drawing
@@ -24,7 +25,8 @@ class Game(object):
         starts a nre round
         :return: None
         """
-        self.round = Round(self.get_word(), self.players[self.player_draw_ind], self.players, self)
+        round_word = self.get_word()
+        self.round = Round(round_word, self.players[self.player_draw_ind], self.players, self)
         self.player_draw_ind += 1
 
         if self.player_draw_ind >= len(self.players):
@@ -92,6 +94,17 @@ class Game(object):
     def get_word(self):
         """
         Gives a word that has not been used yet
-        :return:
+        :return: str
         """
-        # todo to get list of words from somewhere
+        with open("words.txt", 'r') as f:
+            words = []
+
+            for line in f:
+                wrd = line.strip()
+                if wrd not in self.words_used:
+                    words.append(wrd)
+
+            self.words_used.add(wrd)
+
+            r = random.randint(0, len(words))
+            return words[r].strip()
