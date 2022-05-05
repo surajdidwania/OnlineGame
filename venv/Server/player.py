@@ -12,6 +12,14 @@ class Player(object):
         self.score = 0
         self.game = None
 
+    def set_game(self, game):
+        """
+        sets the player game association
+        :param game: Game
+        :return:
+        """
+        self.game = game
+
     def update_score(self, x):
         """
         updates a player score
