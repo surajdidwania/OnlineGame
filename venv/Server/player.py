@@ -41,7 +41,7 @@ class Player(object):
         call to disconnect player
         :return:
         """
-        pass
+        self.game.player_disconnected(self)
 
     def get_score(self):
         """

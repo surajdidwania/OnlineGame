@@ -97,3 +97,4 @@ class Round(object):
         :param msg: str
         :return:
         """
+        self.game.round_ended()

@@ -50,7 +50,18 @@ class Game(object):
         :raises: Exception()
         :return:
         """
-        pass
+        # todo check this
+        if player in self.players:
+            player_ind = self.players.index(player)
+            if player_ind >= self.player_draw_ind:
+                self.player_draw_ind -= 1
+            self.players.remove(player)
+            self.round.player_left(player)
+        else:
+            raise Exception('Player not in game')
+
+        if len(self.players) <= 2:
+            self.end_game()
 
     def skip(self):
         """
@@ -89,7 +100,8 @@ class Game(object):
         ends the game should disconnect all player
         :return:
         """
-        pass
+        for player in self.players:
+            self.round.player_left(player)
 
     def get_word(self):
         """
