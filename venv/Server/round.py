@@ -1,6 +1,7 @@
 from collections import defaultdict
 import time as t
 from _thread import *
+import threading
 from .game import Game
 from .chat import Chat
 from .player import Player
@@ -22,17 +23,16 @@ class Round(object):
         self.time = 75
         self.start = time.time()
         self.chat = Chat(self)
-        start_new_thread(self.time_thread, ())
+        threading.Timer(1, self.time_thread())
 
     def time_thread(self):
         """
         Runs in thread to keep track of time
         :return: None
         """
-        while self.time > 0:
-            t.sleep(1)
-            self.time -= 1
-        self.end_round("Time is Up!!")
+        self.time -= 1
+        if self.time <= 0:
+            self.end_round("Time is Up!!")
 
     def get_scores(self):
         """
