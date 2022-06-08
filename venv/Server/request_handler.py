@@ -9,7 +9,7 @@ import json
 
 
 class Server(object):
-    PLAYERs = 8
+    PLAYERS = 8
     def __init__(self):
         self.connection_queue = []
         self.game_id = 0
@@ -33,30 +33,55 @@ class Server(object):
                 send_msg = {key:[] for key in keys}
 
                 for key in keys:
-                    if key == -1:   #Get Game
+                    if key == -1:   #Get Game, returns a list of players
+                        if player.game:
+                            send_msg[-1] = player.game.players
+                        else:
+                            send_msg[-1] = []
 
-                    elif key == 0:    #Guess
+                    if player.game:
+                        if key == 0:    #Guess
+                            correct = player.game.player_guess(player, data[0][0])
+                            send_msg[0] = correct
 
-                    elif key == 1:    #skip
+                        elif key == 1:    #skip
+                            skip = player.game.skip()
+                            send_msg[1] = skip
 
-                    elif key == 2:    # Get Chat
+                        elif key == 2:    # Get Chat
+                            content = player.game.round.chat.get_chat()
+                            send_msg[2] = content
 
-                    elif key == 3:    # Get baord
+                        elif key == 3:    # Get board
+                            brd = player.round.board.get_board()
+                            send_msg[3] = brd
 
-                    elif key == 4:    # Get Score
+                        elif key == 4:    # Get Score
+                            scores = player.game.get_player_scores()
+                            send_msg[4] = scores
 
-                    elif key == 5:    # Get round
+                        elif key == 5:    # Get round
+                            rnd = player.game.round_count
+                            send_msg[5] = rnd
 
-                    elif key == 6:    # Get word
+                        elif key == 6:    # Get word
+                            word = player.game.round.word
+                            send_msg[6] = word
 
-                    elif key == 7:    # Get Skips
+                        elif key == 7:    # Get Skips
+                            skips = player.game.round.skips
+                            send_msg[7] = skips
 
-                    elif key == 8:    # Update Board
+                        elif key == 8:    # Update Board
+                            x,y,color = data[8][:3]
+                            self.game.update_board(x,y,color)
 
-                    elif key == 9:    # Get Round Time
+                        elif key == 9:    # Get Round Time
+                            t = self.game.round.time
+                            send_msg[9] = t
 
-                    else:
-                        raise Exception("Not a valid request")
+                        else:
+                            raise Exception("Not a valid request")
                     
                 conn.sendall(json.dumps(send_msg))
                 

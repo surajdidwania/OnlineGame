@@ -20,7 +20,8 @@ class Round(object):
         self.skips = 0
         self.player_score = defaultdict(int)  # might be wrong
         self.time = 75
-        self.start = time.time()
+        self.start = t.time()
+        self.game = game
         self.chat = Chat(self)
         start_new_thread(self.time_thread, ())
 
@@ -97,4 +98,7 @@ class Round(object):
         :param msg: str
         :return:
         """
+        for player in self.players:
+            player.update_score(self.player_score[player])
+            
         self.game.round_ended()
